@@ -3,22 +3,27 @@
 {% block title %}Checkout{% endblock %}
 
 {% block content %}
+    <div class="order" style="width: 100%">
     <h1>Checkout</h1>
+    <h3>Your order</h3>
     <div class="order-info">
-        <h3>Your order</h3>
-        <ul>
-            {% for item in cart %}
-                <li>
-                    {{ item.quantity }} x {{ item.product.name }}
-                    <span>${{ item.total_price }}</span>
-                </li>
-            {% endfor %}
-        </ul>
-        <p>Total: ${{ cart.get_total_price }}</p>
+        <div class="order-list">
+            <ul>
+                {% for item in cart %}
+                    <li>
+                        {{ item.quantity }} x {{ item.product.name }}
+                        <span>${{ item.total_price }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <h4>Total: ${{ cart.get_total_price }}</h4>
+        </div>
+        <form action="." method="post" class="order-form" style="text-align: right; margin-left: 40px;">
+            {{ form.as_p }}
+            <p><input class="btn btn-outline-dark mt-auto" type="submit" value="Place order"></p>
+            {% csrf_token %}
+        </form>
     </div>
-    <form action="." method="post" class="order-form">
-        {{ form.as_p }}
-        <p><input type="submit" value="Place order"></p>
-        {% csrf_token %}
-    </form>
+
+    </div>
 {% endblock %}

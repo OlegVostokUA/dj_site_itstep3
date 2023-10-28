@@ -4,16 +4,21 @@
     {% if category %}{{ category.title }}{% else %}Products{% endif %}
 {% endblock %}
 {% block content %}
-    <div class="product-detail">
-        <img class="item-img" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
-        <h1>{{ product.name }}</h1>
-        <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
-        <p class="price">${{ product.price }}</p>
-        {{ product.description|linebreaks }}
-        <form action="{% url 'cart:cart_add' product.id %}" method="post">
-            {{ cart_product_form }}
+    <div class="row" style="width: 100%;">
+        <div class="col-md-4">
+            <img class="item-img" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+        </div>
+         <div class="col-md-8">
+            <h1>{{ product.name }}</h1>
+            <h4><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h4>
+            <h3 class="price">${{ product.price }}</h3>
+            {{ product.description|linebreaks }}
+         </div>
+        <br>
+        <form action="{% url 'cart:cart_add' product.id %}" method="post" style="margin-top: 10px;">
+            <h5>{{ cart_product_form }}
             {% csrf_token %}
-            <input type="submit" value="Add to cart">
+            <input class="btn btn-outline-dark mt-auto" type="submit" value="Add to cart"></h5>
         </form>
     </div>
 {% endblock %}
